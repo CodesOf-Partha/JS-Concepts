@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document of JS</title>
+</head>
+<body>
+   <script>
+    // Task 1 Expected output = 24
+    console.log(mul(2)(3)(4));
+
+    // Task 2 output?
+    var myconfusion =1;
+    console.log(typeof myconfusion)
+    var output = (function() {
+        delete myconfusion;
+        return myconfusion;
+    })();
+    console.log(output);
+
+    // Task 3 output?
+    var diffConfusion= { foo : 1};
+    var output = (function() {
+    delete  diffConfusion.foo;
+    return diffConfusion.foo;
+    })();
+    console.log(output);
+    
+
+    // Task 4 output?
+    var z = 1, y = z = typeof y;
+    console.log(y);
+
+    
+    //Task 5 output?
+    bar();
+    (function abc(){console.log('something')})();
+    function bar(){console.log('bar got called')};
+
+    // Task 6 output?
+    var counterArray = {
+    A : 3,
+    B : 4
+    };
+    counterArray["C"] = 1;
+    console.log(Object.keys(counterArray).length);
+
+    // Task 7 output?
+    var obj = {
+    helloWorld : function() {
+        return "hello world, " + this.name;
+    },
+    name: 'John Carter'
+    }
+    obj.helloWorld();
+
+    // Task 8 || How to call this arrow function?
+    const myFunc = arg => {
+    console.log("hello", arg)
+    }
+
+    // Task 9 output?
+    (function myIIFEFunc(param1) {
+    console.log("Hi, I'm IIFE, " + param1);
+    })("GUVI");
+
+    // Task 10 output?
+    const memoizAddition = () => {
+    let cache = {};
+    return (value) => {
+    if (value in cache) {
+    console.log('Fetching from cache');
+    return cache.value;
+    }
+    else {
+    console.log('Calculating result');
+    let result = value + 20;
+    cache[value] = result;
+    return result;
+    }
+    }
+    }
+    // returned function from memoizAddition
+    const addition = memoizAddition();
+    console.log(addition(20));
+    console.log(addition(20));
+
+    // Task 11 output?
+    const b = [1, 2, 3];
+    const f = (a, ...b) => a + b;
+    console.log(f(1));
+
+    // Task 12 output?
+    var foo = 10;
+    bar = 3;
+    (function () {
+    var foo = 2;
+    bar = 1;
+    }())
+    bar = bar + foo;
+    console.log(bar);
+
+    // Task 13 output?
+    (function(){
+    var a = b = 3;
+    })();
+    console.log(typeof a);
+    console.log(typeof b);
+
+    // Task 14 output?
+    const a = {},
+    b = {c:'b'},
+    c = {b:'c'};
+    a[b] = 111;
+    a[c] = 333;
+    console.log(a[b]);
+
+    // Task 15 output?
+    var a = "42";
+    var b = a * 1;
+    c.l(a);                
+    c.l(b);
+
+    // Task 16 output?
+    var obj = {
+    a: "hello world",
+    b: 42
+    };
+    var b = "a";
+    c.l (obj[b]);
+    c.l(obj["b"]);
+
+    // Task 17 output?
+    var a = null;
+    console.log(a == null); // true
+    console.log(a == undefined); // true
+
+    // Task 18 || Why this happens?
+    var a = [1,2,3];
+    var b = [1,2,3];
+    var c = "1,2,3";
+    a == c;        // true
+    b == c;        // true
+    a == b;        // false
+
+    // Task 19 output?
+    var mid = [3, 4];
+    var newarray = [1, 2, ...mid, 5, 6];
+    console.log(newarray);
+
+    // Task 20 output?
+    (function(x, f = () => x) {
+    var x;
+    var y = x;
+    x = 2;
+    return [x, y, f()];
+    })(1)
+
+    // Task 21 output?
+    (function() {
+    if (false) {
+        let f = { g() => 1 };
+    }
+    return typeof f;
+    })();
+
+    // Task 22 output?
+    (function f(){
+    function f(){ return 1; }
+    return f();
+    function f(){ return 2; }
+    })(); 
+
+
+    </script> 
+</body>
+</html>
