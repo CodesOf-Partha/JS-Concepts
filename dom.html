@@ -1,0 +1,38 @@
+<!--
+Reference: https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model
+
+Document Object Model (DOM):
+It represents the structure of the HTML document.The DOM represents a document with a logical tree. 
+Each branch of the tree ends in a node, and each node contains objects. DOM methods allow programmatic access to the tree,
+With them you can change the document's structure, style, or content. Nodes can also have event handlers attached to them,
+Once an event is triggered, the event handlers get executed.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DOM Concept</title>
+    <style>
+    .simple{
+        color:red;
+    }
+    </style>
+</head>
+<body>
+    <h1>Lets see how interesting it is!!!</h1>
+    <h2 class="simple">Hi! I'm h2 tag with class="simple"</h2>
+    <h3 id="h3">Hi! I'm h3 tag with ID="h3"</h3>
+    <p id="pTag"></p>
+    <script>
+        //Window
+        console.log(window);
+        //Document
+        console.log(document);
+        //getElementById
+        document.getElementById("pTag").innerHTML = "Hey guys! I came in by document.getElementById('pTag').innerHTML ";
+    </script>
+</body>
+</html>
