@@ -22,17 +22,54 @@ Once an event is triggered, the event handlers get executed.
     </style>
 </head>
 <body>
-    <h1>Lets see how interesting it is!!!</h1>
-    <h2 class="simple">Hi! I'm h2 tag with class="simple"</h2>
-    <h3 id="h3">Hi! I'm h3 tag with ID="h3"</h3>
-    <p id="pTag"></p>
+    <div id="div1">
+        <h1 name="MyName">Lets see how interesting Document Object Model (DOM) is!!!</h1>
+        <h2 class="simple" id="h2">Hi! I'm h2 tag with class="simple"</h2>
+        <h3 id="h3">Hi! I'm h3 tag with ID="h3"</h3>
+        <h4>I'm H4 tag</h4>
+        <p id="h4"></p>
+        <p id="pTag"></p>
+        <h1>---- Events starts from here ----</h1>
+        <button type="button" onclick="document.getElementById('h2').style.color = 'green'"> Click Me to change the color of H2 tag</button>
+        <h1 onclick="this.innerHTML = 'oi! y u changed me? will you do what ever i say?'">Click me to change myself</h1>
+        <ul>
+            <li>onload</li>
+            <li>onchange</li>
+            <li>onmouseover</li>
+            <li>onmouseout</li>
+            <li>onmousedown</li>
+            <li>onmouseup</li>
+        </ul>
+        <p id="remove">I'm invisible</p>
+    </div>
     <script>
         //Window
         console.log(window);
+        //window.confirm("Welcome guys!!! Can we start?");
         //Document
         console.log(document);
         //getElementById
-        document.getElementById("pTag").innerHTML = "Hey guys! I came in by document.getElementById('pTag').innerHTML ";
+        document.getElementById("pTag").innerHTML = "Hey guys! I came in by <b>document.getElementById('pTag').innerHTML </b>";
+        //getElementsByTagName
+        let text = document.getElementsByTagName("h4");
+        document.getElementById("h4").innerHTML="<b>"+text[0].innerHTML+"</b> added with Paragraph using document.getElementById('h4').innerHTML ";
+        //getElementByName
+        console.log("The value of document.getElementsByName('MyName')[0].innerText is: "+document.getElementsByName("MyName")[0].innerText);
+        //getElementByClassName
+        console.log("The value of document.getElementsByClassName('simple')[0].innerText is: "+document.getElementsByClassName("simple")[0].innerText);
+        //QuerySelector
+        console.log("The value of document.querySelectorAll('h2.simple')[0].innerText is: "+document.querySelectorAll('h2.simple')[0].innerText);
+        //Creating New HTML element
+        var para = document.createElement("p");
+        var node = document.createTextNode("This is a new paragraph.");
+        para.appendChild(node);
+        var element = document.getElementById("div1");
+        element.appendChild(para);
+        //Removing Existing HTML element
+        var parent = document.getElementById("div1");
+        var child = document.getElementById("remove");
+        parent.removeChild(child);
+        parent.replaceChild(child, para);
     </script>
 </body>
 </html>
