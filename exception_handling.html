@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ExceptionHandling</title>
+  </head>
+  <body>
+    <!-- 1/                 <=======================X=Exception=Handling=X============================================>
+    <script>
+        Difference Between Error and Exception ?
+
+        Ans:
+          => “Error” is a critical condition that cannot be handled by the code of the program.
+          
+          => "Exception"someone or something that is not included
+              in a rule, group, or list or that does not behave in the expected way.The Exception is Handled in "Run-Time"
+
+              Example: Signup Page in your website fill your mobile number instead of giving number
+                       you give any alphabet it shows error. In these part we use "Exception Handling"
+                       for solve this kind of Problems.
+
+        Exception Handling syntax:
+                 try {
+
+                    code...
+
+                     } catch (err) {
+
+                    error handling
+
+                      }
+
+           Example:1  <=========================================================================>
+                  try {
+
+                    alert('Start of try runs');  // (1) <--
+
+                    lalala; // error, variable is not defined!
+
+                     alert('End of try (never reached)');  // (2)
+
+                     } catch(err) {
+
+                    alert(`Error has occurred!`); // (3) <--
+
+                        }
+
+                  alert("...Then the execution continues");
+            Example:2 <==============================================================================>
+        If an exception happens in “scheduled” code, like in setTimeout, then try..catch won’t catch it:
+
+                   try {
+
+                           setTimeout(function() {
+
+                            noSuchVariable; // script will die here
+
+                                                 }, 1000);
+
+                      } 
+                      catch (e) {
+
+                     alert( "won't work" );
+
+                                }
+               <======================================================================================>
+                  That’s because the function itself is executed later, when the engine
+                  has already left the try..catch construct.
+
+                  To catch an exception inside a scheduled function, try..catch 
+                  must be inside that function:
+
+                  setTimeout(function() {
+
+                  try {
+
+                  noSuchVariable; // try..catch handles the error!
+
+                 }
+                  catch {
+
+                 alert( "error is caught here!" );
+
+                   }
+
+                 }, 1000);
+                 <=======================================================================================>
+            =>> Error object :
+
+                 When an error occurs, JavaScript generates an object containing the details about it.
+                 The object is then passed as an argument to catch:
+
+                 try {
+                       // ...
+                  } catch(err) { // <-- the "error object", could use another word instead of err
+                       // ...
+                     }
+                For all built-in errors, the error object inside catch block has two main properties:
+
+                => name
+                 Error name. For an undefined variable that’s "ReferenceError".
+
+                =>message
+                 Textual message about error details.
+        Example:3 <=====================================================================================>
+                    try {
+
+                      lalala; // error, variable is not defined!
+                     }
+                      catch(err) {
+                     alert(err.name); // ReferenceError
+                   alert(err.message); // lalala is not defined
+                  
+                  alert(err); // ReferenceError: lalala is not defined
+
+                   }
+                 <======================================================================================>
+                =>> Using “try…catch”
+               Let’s explore a real-life use case of try..catch.
+          As we already know, JavaScript supports the JSON.parse(str) method to read JSON-encoded values.
+
+          Usually it’s used to decode data received over the network, from the server or another source.
+
+           We receive it and call JSON.parse, like this:
+          <==========================================================================================>
+              let json = '{"name":"John", "age": 30}'; // data from the server
+
+             let user = JSON.parse(json); // convert the text representation to JS object
+
+             // now user is an object with properties from the string
+             alert( user.name ); // John
+              alert( user.age );  // 30
+              <=====================================================================================>
+    =>> If json is malformed, JSON.parse generates an error, so the script “dies”.
+
+        Should we be satisfied with that? Of course, not!
+
+        This way, if something’s wrong with the data, the visitor will never know that (unless they open the developer console).
+        And people really don’t like when something “just dies” without any error message.
+
+        Let’s use try..catch to handle the error:
+        let json = "{ bad json }";
+
+       try {
+
+         let user = JSON.parse(json); // <-- when an error occurs...
+         alert( user.name ); // doesn't work
+
+        } catch (e) {
+          // ...the execution jumps here
+        alert( "Our apologies, the data has errors, we'll try to request it one more time." );
+        alert( e.name );
+        alert( e.message );
+         }
+         Here we use the catch block only to show the message,
+          but we can do much more: send a new network request,
+           suggest an alternative to the visitor,
+            send information about the error to a logging facility,
+             All much better than just dying.
+             <======================================================================================>
+           =>>“Throw” operator
+          The throw operator generates an error.
+
+            The syntax is:
+
+            throw <error object>
+
+           Technically, we can use anything as an error object. 
+           That may be even a primitive, like a number or a string, 
+           but it’s better to use objects, preferably with name and message properties (to stay somewhat compatible with built-in errors).
+
+           JavaScript has many built-in constructors for standard errors:
+
+           {
+               <=========Standard-Errors============>
+
+                       => Error, 
+                       => SyntaxError,
+                       => ReferenceError,
+                       => TypeError and others.
+           }
+            We can use them to create error objects as well.
+
+        Their syntax is:
+      <==================================================================>
+         let error = new Error(message);
+         // or
+         let error = new SyntaxError(message);
+         let error = new ReferenceError(message);
+         // ...
+         For built-in errors (not for any objects, just for errors), the name property is exactly the name of the constructor.
+          And message is taken from the argument.
+
+         For instance:
+        <=================================================================================================>
+         let error = new Error("Things happen o_O");
+
+         alert(error.name); // Error
+          alert(error.message); // Things happen o_O
+          Let’s see what kind of error JSON.parse generates:
+         try {
+          JSON.parse("{ bad json o_O }");
+         } catch(e) {
+        alert(e.name); // SyntaxError
+        alert(e.message); // Unexpected token o in JSON at position 0
+        }
+       <=================================================================================================>
+        As we can see, that’s a SyntaxError.
+
+        And in our case, the absence of name could be treated as a syntax error also, assuming that users must have a name.
+
+        So let’s throw it:
+
+        let json = '{ "age": 30 }'; // incomplete data
+
+        try {
+
+        let user = JSON.parse(json); // <-- no errors
+
+        if (!user.name) {
+          throw new SyntaxError("Incomplete data: no name"); // (*)
+         }
+
+        alert( user.name );
+
+       } catch(e) {
+        alert( "JSON Error: " + e.message ); // JSON Error: Incomplete data: no name
+      }
+      In the line (*), the throw operator generates a SyntaxError with the given message,
+       the same way as JavaScript would generate it itself. The execution of try immediately stops and the control flow jumps into catch.
+
+      Now catch became a single place for all error handling: both for JSON.parse and other cases
+      <======================================================================================================================>
+     =>> Rethrowing
+      In the example above we use try..catch to handle incorrect data. 
+      But is it possible that another unexpected error occurs within the try {...} block? 
+      Like a programming error (variable is not defined) or something else, not just that “incorrect data” thing.
+
+     Like this:
+<=======================================================================================================================>
+    let json = '{ "age": 30 }'; // incomplete data
+
+      try {
+       user = JSON.parse(json); // <-- forgot to put "let" before user
+
+       // ...
+     } catch(err) {
+       alert("JSON Error: " + err); // JSON Error: ReferenceError: user is not defined
+      // (no JSON Error actually)
+      }
+    Of course, everything’s possible! Programmers do make mistakes.
+    <=======================================================================================================================>
+   =>> Catch should only process errors that it knows and “rethrow” all others.
+
+    The “rethrowing” technique can be explained in more detail as:
+
+              Catch gets all errors.
+              In catch(err) {...} block we analyze the error object err.
+              If we don’t know how to handle it, then we do throw err.
+              In the code below, we use rethrowing so that catch only handles SyntaxError:
+
+   <========================================================>
+
+               let json = '{ "age": 30 }'; // incomplete data
+               try {
+
+                 let user = JSON.parse(json);
+
+                 if (!user.name) {
+                   throw new SyntaxError("Incomplete data: no name");
+                 }
+
+                 blabla(); // unexpected error
+
+                 alert( user.name );
+
+               } catch(e) {
+
+                 if (e.name == "SyntaxError") {
+                   alert( "JSON Error: " + e.message );
+                 } else {
+                   throw e; // rethrow (*)
+                 }
+
+               }
+
+        The error throwing on line (*) from inside catch block “falls out” of try..catch and 
+        can be either caught by an outer try..catch construct (if it exists), or it kills the script.
+
+        So the catch block actually handles only errors that it knows how to deal with and “skips” all others.
+      <==============================================>
+      The example below demonstrates how such errors can be caught by one more level of try..catch:
+       function readData() {
+        let json = '{ "age": 30 }';
+
+                try {
+                          blabla(); // error!
+             } catch (e) {
+               // ...
+               if (e.name != 'SyntaxError') {
+                 throw e; // rethrow (don't know how to deal with it)
+               }
+             }
+           }
+           try {
+             readData();               
+           } catch (e) {
+             alert( "External catch got: " + e ); // caught it!
+           }
+
+          Here readData only knows how to handle SyntaxError, while the outer try..catch knows how to handle everything. 
+        <===========================================================================================================================>
+ =>> try…catch…finally
+
+
+                        The try..catch construct may have one more code clause: finally.
+
+                        If it exists, it runs in all cases:
+
+                        after try, if there were no errors,
+                        after catch, if there were errors.
+                        The extended syntax looks like this:
+            Syntax:
+
+                                     try {
+                                    ... try to execute the code ...
+                                } catch(e) {
+                                      ... handle errors ...
+                                } finally {
+                                     ... execute always ...
+                                   } 
+        <======================================================================================>                                  
+           Try running this code:
+
+                 try {
+                  alert( 'try' );
+                  if (confirm('Make an error?')) BAD_CODE();
+                } catch (e) {
+                  alert( 'catch' );
+                } finally {
+                  alert( 'finally' );
+                }
+                The code has two ways of execution:
+
+                If you answer “Yes” to “Make an error?”, then try -> catch -> finally.
+                If you say “No”, then try -> finally.
+                The finally clause is often used when we start doing something and want to finalize it in any case of outcome.
+<====================================================================================================================================>
+=>> Final Example
+         <!DOCTYPE html>
+      <html>
+    <body>
+
+     <p>Please input a number between 5 and 10:</p>
+
+     <input id="demo" type="text">
+     <button type="button" onclick="myFunction()">Test Input</button>
+    <p id="p01"></p>
+
+     <script>
+
+  function myFunction() {
+   var message, x;
+     message = document.getElementById("p01");
+     message.innerHTML = "";
+    x = document.getElementById("demo").value;
+    try 
+     { 
+    if(x == "")  throw "empty";
+    if(isNaN(x)) throw "not a number";
+    x = Number(x);
+    if(x < 5)  throw "too low";
+    if(x > 10)   throw "too high";
+  }
+  catch(err) {
+    message.innerHTML = "Input is " + err;
+  }
+}
+</script>
+
+</body>
+</html>
+
+        <============================================XX=THANK-YOU=XX==============================================================>
+     </script>
+    -->
+  </body>
+</html>
