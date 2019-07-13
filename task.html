@@ -1,0 +1,95 @@
+<html>
+<head></head>
+<body></body>
+	<script>
+		//Task 1
+		// https://medium.com/@reach2arunprakash/guvi-zen-code-sprint-javascript-practice-problems-in-json-objects-and-list-49ac3356a8a5
+		/*
+		var object = {
+			name : 'RajiniKanth', 
+			age : 33, 
+			hasPets : false
+		};
+		function printAllValues(obj) {
+			console.log(Object.values(obj));
+		}
+		printAllValues(object);
+		*/
+
+		//Task 2
+
+		/*
+		var object = {
+			name : 'RajiniKanth', 
+			age : 33, 
+			hasPets : false
+		};
+		function printAllKeys(obj) {
+			console.log(Object.keys(obj));
+		}
+		printAllKeys(object);
+		*/
+
+		//Task 3
+
+		/*
+		var object = {name: 'ISRO', age: 35, role: 'Scientist'};
+		function convertListToObject(obj) {
+			console.log(Object.entries(obj));
+		}
+		convertListToObject(object);
+		*/
+
+		//Task 4
+		/*
+		var array = ['GUVI', 'I', 'am', 'a geek'];
+		function transformFirstAndLast(arr) {
+			var str=array[0];
+		var newObject={}
+		newObject[str]=arr[arr.length-1];
+		return newObject;
+		}
+		console.log(transformFirstAndLast(array));
+		*/
+
+		//Task 5
+		/*
+		var array = [['make','Ford'], ['model', 'Mustang'], ['year', 1964]];
+		function fromListToObject(arr) {
+		var newObject = {};
+		for(var i=0;i<arr.length;i++){
+				newObject[arr[i][0]]=arr[i][1];
+		}
+		return newObject;
+		}
+		console.log(fromListToObject(array));
+		*/
+
+		//Task 6
+
+		/*
+		var array = [[['firstName', 'Vasanth'], ['lastName', 'Raja'], ['age', 24], ['role', 'JSWizard']], [['firstName', 'Sri'], ['lastName', 'Devi'], ['age', 28], ['role', 'Coder']]];
+		function transformEmployeeData(arr) {
+		var tranformEmployeeList = [];
+		for(var i=0;i<2;i++){
+			tranformEmployeeList.push(Object.fromEntries(array[i]));
+		}		
+		return tranformEmployeeList;
+		}
+		console.log(transformEmployeeData(array));
+		*/
+
+		//Task 7
+
+		/*
+		var expected = {foo: 5, bar: 6};
+		var actual = {foo: 5, bar: 6}
+		if(JSON.stringify(expected)===JSON.stringify(actual)){
+			console.log("PASSED");
+		}else{
+			console.log("FAILED [my test] Expected "+JSON.stringify(expected)+", but got "+ JSON.stringify(actual));
+		}
+		*/
+	</script>
+</html>
+
